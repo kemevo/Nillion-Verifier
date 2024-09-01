@@ -11,9 +11,11 @@
 - [Resmi kaynak](https://nillion.com/news/1007/)
 
 ## Faucetten token temini
-&emsp;Burdan keplr cüzdanına ağı eklioruz: https://chains.keplr.app/
-&emsp;Daha sonra kepler cüzdanında, sol üstten "Settings" kısmına gelip, "Manage Chain Visibility" kısmından nillion açıyoruz. Artık ağ gözüktüğüne göre adresinizi kopyalayabilirsiniz.
-&emsp;Burdan test token temin ediyoruz: https://faucet.testnet.nillion.com/
+>Burdan keplr cüzdanına ağı eklioruz: https://chains.keplr.app/
+
+>Daha sonra kepler cüzdanında, sol üstten "Settings" kısmına gelip, "Manage Chain Visibility" kısmından nillion açıyoruz. Artık ağ gözüktüğüne göre adresinizi kopyalayabilirsiniz.
+
+>Burdan test token temin ediyoruz: https://faucet.testnet.nillion.com/
 
 ## Node Kurulumu
 ### Her satırı tek tek kopyalayıp, çalıştıralım.
@@ -31,17 +33,21 @@ docker run -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v1.0.0 init
 ### Log çıktısında account_id ve public key kaydediyoruz.
 
 ## Portal Kaydı
-&emsp;Buraya girip, verifier tıklıyoruz. Bilgileri dolduruyoruz: https://verifier.nillion.com/
+> Buraya girip, verifier tıklıyoruz. Bilgileri dolduruyoruz: https://verifier.nillion.com/
 
 ## Faucetten token temini - 2
-&emsp;Burdan loglarda çıktı olarak gözüken adrese test token temin ediyoruz: https://faucet.testnet.nillion.com/
+> Burdan loglarda çıktı olarak gözüken adrese test token temin ediyoruz: https://faucet.testnet.nillion.com/
 
 > [!CAUTION]
 > Bu aşamadan sonra 30-60 dk bekliyoruz.
 
 ## Node çalıştırma
 ```bash
-docker run -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v1.0.0 --rpc-endpoint "<http://51.89.195.146:26657>" --block-start 4670666
+docker run -d --name nillion_node -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v1.0.0 accuse --rpc-endpoint "https://testnet-nillion-rpc.lavenderfive.com" --block-start 5266535
+```
+>Loglara bakma (Registered: true yazması gerekiyor)
+```
+docker logs -f nillion_node --tail 50
 ```
 > Alternatif RPC'ler:
 ```
