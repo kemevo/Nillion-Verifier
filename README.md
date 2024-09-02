@@ -54,6 +54,7 @@ docker logs -f nillion_node --tail 50
 https://testnet-nillion-rpc.lavenderfive.com
 https://nillion-testnet-rpc.polkachu.com
 ```
+> $HOME/nillion/accuser/credentials.json dosyasını yedekleyin.
 
 ## Registered: False hatası alanlar
 > İlk önce https://verifier.nillion.com/ burdan tekrar verify yapmayı deneyin olmazsa aşağıdaki adımları deneyin farklı rpc ile.  (sondaki block height kısmı resmi siteden alın)
@@ -67,5 +68,8 @@ docker run -d --name nillion_node -v ./nillion/accuser:/var/tmp nillion/retailto
 ## Secrets kısmı görevleri
 > 1. Görev avcunuzun resmini yükleyin.
 > 2. Görev keplr adresinizi kaydedin.
+
+
+
 
 
