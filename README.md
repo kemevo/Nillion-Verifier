@@ -41,7 +41,7 @@ docker run -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v1.0.0 init
 > [!CAUTION]
 > Bu aşamadan sonra 30-60 dk bekliyoruz.
 
-## Node çalıştırma
+## Node çalıştırma (sondaki block height kısmı resmi siteden alın)
 ```bash
 docker run -d --name nillion_node -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v1.0.0 accuse --rpc-endpoint "https://testnet-nillion-rpc.lavenderfive.com" --block-start 5266535
 ```
@@ -54,4 +54,18 @@ docker logs -f nillion_node --tail 50
 https://testnet-nillion-rpc.lavenderfive.com
 https://nillion-testnet-rpc.polkachu.com
 ```
+
+## Registered: False hatası alanlar
+> İlk önce https://verifier.nillion.com/ burdan tekrar verify yapmayı deneyin olmazsa aşağıdaki adımları deneyin farklı rpc ile.  (sondaki block height kısmı resmi siteden alın)
+
+```bash
+docker stop nillion_node
+docker rm nillion_node
+docker run -d --name nillion_node -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v1.0.0 accuse --rpc-endpoint "FARKLI RPC BURAYA" --block-start 5266535
+```
+
+## Secrets kısmı görevleri
+> 1. Görev avcunuzun resmini yükleyin.
+> 2. Görev keplr adresinizi kaydedin.
+
 
