@@ -24,10 +24,10 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install git make curl screen tar wget jq build-essential -y 
 sudo apt install make clang pkg-config libssl-dev -y
 curl -fssl https://get.docker.com | bash -s docker
-docker pull nillion/retailtoken-accuser:v1.0.0
+docker pull nillion/retailtoken-accuser:v2.0.3
 cd
 mkdir -p nillion/accuser
-docker run -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v1.0.0 initialise
+docker run -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v2.0.3 initialise
 ```
 
 ### Log çıktısında account_id ve public key kaydediyoruz.
@@ -43,7 +43,8 @@ docker run -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v1.0.0 init
 
 ## Node çalıştırma (sondaki block height kısmı resmi siteden alın)
 ```bash
-docker run -d --name nillion_node -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v1.0.0 accuse --rpc-endpoint "https://testnet-nillion-rpc.lavenderfive.com" --block-start 5266535
+LATEST_BLOCK=$(curl -s https://nillion-testnet-rpc.polkachu.com/status | jq -r .result.sync_info.latest_block_height) && \
+docker run -d --name nillion_node -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v2.0.3 accuse --rpc-endpoint "https://nillion-testnet-rpc.polkachu.com" --block-start "$LATEST_BLOCK" 
 ```
 >Loglara bakma (Registered: true yazması gerekiyor)
 ```
@@ -60,9 +61,10 @@ https://nillion-testnet-rpc.polkachu.com
 > İlk önce https://verifier.nillion.com/ burdan tekrar verify yapmayı deneyin olmazsa aşağıdaki adımları deneyin farklı rpc ile.  (sondaki block height kısmı resmi siteden alın)
 
 ```bash
-docker stop nillion_node
-docker rm nillion_node
-docker run -d --name nillion_node -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v1.0.0 accuse --rpc-endpoint "FARKLI RPC BURAYA" --block-start 5266535
+docker stop nillion_node && \
+docker rm nillion_node && \
+LATEST_BLOCK=$(curl -s https://nillion-testnet-rpc.polkachu.com/status | jq -r .result.sync_info.latest_block_height) && \
+docker run -d --name nillion_node -v ./nillion/accuser:/var/tmp nillion/retailtoken-accuser:v2.0.3 accuse --rpc-endpoint "https://nillion-testnet-rpc.polkachu.com" --block-start "$LATEST_BLOCK" 
 ```
 
 ## Secrets kısmı görevleri
